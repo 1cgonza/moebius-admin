@@ -1,0 +1,6 @@
+.DS_Store
+
+# Sublime SFTP settings file
+sftp-config.json
+
+error_log

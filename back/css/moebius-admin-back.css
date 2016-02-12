@@ -1,0 +1,30 @@
+.moebius-users-order-item {
+  cursor: move;
+  margin: 1em 0;
+  padding-right: 1em;
+  border: 1px dotted;
+}
+
+.moebius-users-order-item:hover, .moebius-users-order-item:active {
+  cursor: move;
+  background-color: rgba(110, 177, 88, 0.17);
+}
+
+.moebius-user-img, .moebius-user-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.moebius-user-img {
+  margin: 0;
+  line-height: 0;
+}
+
+.moebius-user-img img {
+  width: 80px;
+  height: auto;
+}
+
+.moebius-user-name {
+  margin-left: 1em;
+}

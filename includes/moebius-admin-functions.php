@@ -28,7 +28,10 @@ function get_moebius_users() {
 
     if ( !empty($group) ) {
       $iPosition = get_the_author_meta( 'moebius_order', $user->ID );
-      $iPosition = !empty( (int)$iPosition + 1 ) ? $iPosition : (int)$user->ID + 9999;
+
+      if ( empty($iPosition) && strlen($iPosition) == 0 ) {
+        $iPosition = $user->ID + 9999;
+      }
 
       if ( !array_key_exists($group, $authors) ) {
         $authors[$group] = [];

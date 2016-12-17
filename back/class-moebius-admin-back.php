@@ -14,8 +14,8 @@ class Moebius_Admin_Back {
   }
 
   public function enqueue_scripts() {
-    wp_enqueue_script( 'sortable', '//cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js', array(), '', false );
-    wp_enqueue_script( $this->moebius_admin, plugin_dir_url( __FILE__ ) . 'js/moebius-admin-back.js', array( 'jquery', 'sortable' ), $this->version, false );
+    wp_enqueue_script( 'sortable', '//cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js', array(), '', true );
+    wp_enqueue_script( $this->moebius_admin, plugin_dir_url( __FILE__ ) . 'js/moebius-admin-back.js', array( 'jquery', 'sortable' ), $this->version, true );
   }
 
   /*=================================================
@@ -124,68 +124,7 @@ class Moebius_Admin_Back {
         update_user_option($userID, 'moebius_order', sanitize_text_field($position), true );
       }
     }
-
-    $users = get_moebius_users();
-    $authors = $users['authors'];
-    $groups = $users['groups'];
-?>
-
-    <form method="post">
-    <?php /*----------  EQUIPO PRINCIPAL  ----------*/ ?>
-    <?php if ( array_key_exists($groups['principal'], $authors) ) : ?>
-      <h2 class="group-title">Equipo Principal</h2>
-      <div id="list-equipo-principal">
-      <?php foreach ($authors[$groups['principal']] as $index => $author) : ?>
-        <div class="moebius-users-order-item">
-          <p class="moebius-user-img"><?php echo wp_get_attachment_image($author['img'], 'thumbnail'); ?></p>
-          <p class="moebius-user-name"><?php echo $author['name']; ?></p>
-          <input name="<?php echo $author['ID']; ?>" value="<?php echo $index; ?>" type="hidden" class="moebius-user-field"></input>
-        </div>
-      <?php endforeach; ?>
-      </div>
-    <?php endif; ?>
-    <?php /*----------  COLABORADORES  ----------*/ ?>
-    <?php if ( array_key_exists($groups['colaborators'], $authors) ) : ?>
-      <h2 class="group-title">Colaboradores</h2>
-      <div id="list-colaboradores">
-      <?php foreach ($authors[$groups['colaborators']] as $index => $author) : ?>
-        <div class="moebius-users-order-item">
-          <p class="moebius-user-img"><?php echo wp_get_attachment_image($author['img'], 'thumbnail'); ?></p>
-          <p class="moebius-user-name"><?php echo $author['name']; ?></p>
-          <input name="<?php echo $author['ID']; ?>" value="<?php echo $index; ?>" type="hidden" class="moebius-user-field"></input>
-        </div>
-      <?php endforeach; ?>
-      </div>
-    <?php endif; ?>
-      <p><input class="button-primary" type="submit" value="Update"/></p>
-    </form>
-
-    <script>
-      var principal = document.getElementById('list-equipo-principal');
-      var collaborators = document.getElementById('list-colaboradores');
-
-      if (principal) {
-        var pSortable = Sortable.create(principal, {
-          animation: 150,
-          onEnd: onEndHandler
-        });
-      }
-
-      if (collaborators) {
-        var cSortable = Sortable.create(collaborators, {
-          animation: 150,
-          onEnd: onEndHandler
-        });
-      }
-
-      function onEndHandler (evt) {
-        var usersList = document.querySelectorAll('.moebius-user-field');
-        for (var i = 0; i < usersList.length; i++) {
-          usersList[i].value = i;
-        }
-      }
-    </script>
-    <?php
+    require_once dirname( __FILE__ ) . '/partials/moebius-admin-back-display.php';
   }
 
 }
